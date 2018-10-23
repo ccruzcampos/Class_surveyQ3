@@ -1,0 +1,55 @@
+<!-- R Commander Markdown Template -->
+
+Replace with Main Title
+=======================
+
+### Your Name
+
+### `r as.character(Sys.Date())`
+
+```{r echo=FALSE}
+# include this code chunk as-is to set options
+knitr::opts_chunk$set(comment=NA, prompt=TRUE, out.width=750, fig.height=8, fig.width=8)
+library(Rcmdr)
+library(car)
+library(RcmdrMisc)
+```
+
+
+```{r echo=FALSE}
+# include this code chunk as-is to enable 3D graphs
+library(rgl)
+knitr::knit_hooks$set(webgl = hook_webgl)
+```
+
+
+```{r}
+alldat <- read.table("E:/Project_folders/Class_Survey/alldat.csv", header=TRUE, 
+  sep=",", na.strings="NA", dec=".", strip.white=TRUE)
+```
+
+```{r}
+Boxplot(Age_yrs~sect, data=alldat, id=list(method="y"))
+```
+
+```{r}
+library(abind, pos=36)
+```
+
+
+```{r}
+library(e1071, pos=37)
+```
+
+
+```{r}
+numSummary(alldat[,"Age_yrs", drop=FALSE], groups=alldat$sect, 
+  statistics=c("mean", "sd", "IQR", "quantiles"), quantiles=c(0,.25,.5,.75,1))
+```
+
+```{r}
+t.test(Age_yrs~sect, alternative='two.sided', conf.level=.95, var.equal=FALSE, 
+  data=alldat)
+```
+
+
